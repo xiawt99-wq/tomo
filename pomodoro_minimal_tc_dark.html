@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>極簡番茄鐘（深色 + 台詞庫）</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg: #0b1020;
+    --card: #111827;
+    --card-2:#0f172a;
+    --text:#E6EAF2;
+    --muted:#A7B0C0;
+    --accent:#22d3ee; /* 青藍，取代紫色 */
+    --accent-2:#34d399; /* 綠松 */
+    --danger:#ef4444;
+    --border: rgba(255,255,255,.08);
+    --shadow: 0 12px 40px rgba(0,0,0,.35);
+    --ring: 0 0 0 2px rgba(34,211,238, .35);
+  }
+  *{ box-sizing:border-box; font-family: 'Noto Sans TC', system-ui, -apple-system, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+  body{
+    margin:0; background: radial-gradient(1200px 600px at 80% -10%, #0e1530 0%, #0b1020 60%), var(--bg);
+    color: var(--text);
+    display:flex; min-height:100vh; justify-content:center; align-items:flex-start; padding:24px;
+  }
+  .app{ width:100%; max-width:980px; display:grid; grid-template-columns: 1.1fr .9fr; gap:16px; }
+  @media (max-width:900px){ .app{ grid-template-columns:1fr } }
+  .card{
+    background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+    border:1px solid var(--border); border-radius:16px; padding:16px 18px; box-shadow:var(--shadow);
+  }
+  h1,h2{ margin:0 0 10px; line-height:1.2 }
+  h1{ font-weight:800; font-size:22px; color:#F3F4F6 }
+  h2{ font-size:14px; letter-spacing:.4px; color: var(--muted); text-transform: uppercase }
+  .timer{ display:flex; flex-direction:column; gap:14px; align-items:center; text-align:center }
+  .time{ font-size:80px; font-weight:800; letter-spacing:2px; line-height:1; padding:8px 16px }
+  .presets{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center }
+  .chip{
+    border:1px solid var(--border); background:transparent; color:var(--text);
+    padding:9px 12px; border-radius:999px; cursor:pointer
+  }
+  .chip.active{ background:var(--accent); color:#062a30; border-color:transparent }
+  .controls{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center }
+  .btn{ border:none; padding:12px 16px; border-radius:12px; cursor:pointer; font-weight:700 }
+  .btn:focus-visible{ outline:none; box-shadow: var(--ring) }
+  .btn.primary{ background:var(--accent); color:#05242a }
+  .btn.ghost{ background:transparent; border:1px solid var(--border); color:var(--text) }
+  .btn.danger{ background:var(--danger); color:#2a0d0d }
+  .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
+  input[type="text"], input[type="number"], textarea{
+    background:#0c1122; color:var(--text); border:1px solid var(--border); border-radius:10px; padding:10px 12px; outline:none;
+  }
+  .muted{ color:var(--muted) }
+  .divider{ height:1px; background:var(--border); margin:10px 0 }
+  /* 台詞庫區塊 */
+  .phrases{ display:flex; flex-direction:column; gap:10px }
+  .kicker{ font-size:12px; color:var(--muted); letter-spacing:.3px }
+  .preview{ background:#0c1122; border:1px dashed var(--border); padding:12px; border-radius:12px; min-height:52px }
+  .small{ font-size:12px }
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="card">
+    <h1>專注番茄鐘</h1>
+    <div class="timer" aria-live="polite">
+      <div class="time" id="time">25:00</div>
+      <div class="presets" role="group" aria-label="預設時長">
+        <button class="chip active" data-min="25">25 分鐘</button>
+        <button class="chip" data-min="50">50 分鐘</button>
+        <button class="chip" data-min="5">5 分鐘</button>
+        <label class="chip" style="display:inline-flex;align-items:center;gap:6px;">
+          自訂 <input id="customMin" type="number" min="1" value="30" style="width:64px">
+        </label>
+        <button class="chip" id="applyCustom">套用</button>
+      </div>
+      <div class="row" style="justify-content:center">
+        <input id="taskTitle" type="text" placeholder="當前任務（例如：複習單字）" aria-label="當前任務" />
+      </div>
+      <div class="controls">
+        <button id="startBtn" class="btn primary">開始</button>
+        <button id="pauseBtn" class="btn ghost" disabled>暫停</button>
+        <button id="resetBtn" class="btn danger">重置</button>
+      </div>
+      <div class="muted" id="tip">輸入任務名稱後開始吧！</div>
+    </div>
+  </section>
+
+  <aside class="card">
+    <div class="row" style="align-items:center;justify-content:space-between">
+      <div style="font-weight:800;font-size:18px">夢角台詞庫</div>
+      <button id="nextLine" class="btn ghost">抽一句</button>
+    </div>
+    <div class="divider"></div>
+    <div class="phrases">
+      <div class="kicker">目前顯示</div>
+      <div class="preview" id="linePreview">（尚未設定台詞）</div>
+      <textarea id="phrasePool" rows="8" placeholder="每行一則台詞，例：\n今天也要一起加油噢～\n喝杯水，伸個懶腰，再出發。"></textarea>
+      <div class="row" style="justify-content:flex-end">
+        <button id="savePhrases" class="btn primary">保存台詞庫</button>
+      </div>
+      <div class="small muted">提示：台詞庫只會保存在此裝置（localStorage）。</div>
+    </div>
+  </aside>
+</main>
+
+<script>
+(()=>{
+  const $ = s=>document.querySelector(s);
+  const $$ = s=>Array.from(document.querySelectorAll(s));
+  const el = {
+    time: $("#time"), start: $("#startBtn"), pause: $("#pauseBtn"), reset: $("#resetBtn"),
+    tip: $("#tip"), taskTitle: $("#taskTitle"),
+    customMin: $("#customMin"), applyCustom: $("#applyCustom"),
+    phrasePool: $("#phrasePool"), savePhrases: $("#savePhrases"),
+    linePreview: $("#linePreview"), nextLine: $("#nextLine")
+  };
+
+  // ===== Timer state =====
+  const state = { running:false, targetMs:25*60*1000, endAt:null, remainMs:25*60*1000, tickHandle:null };
+  function renderTime(ms){
+    ms = Math.max(0, ms|0);
+    const m = Math.floor(ms/60000), s = Math.floor((ms%60000)/1000);
+    el.time.textContent = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  }
+  function speakTip(txt){ el.tip.textContent = txt; }
+  function startTimer(){
+    if(state.running) return;
+    state.running = true; state.endAt = Date.now()+state.remainMs;
+    el.start.disabled = true; el.pause.disabled = false;
+    speakTip("已開始，專注當下！"); tick();
+  }
+  function pauseTimer(){
+    if(!state.running) return;
+    state.running = false; state.remainMs = Math.max(0, state.endAt - Date.now());
+    el.start.disabled = false; el.pause.disabled = true;
+    speakTip("已暫停，需要時再繼續。");
+    if(state.tickHandle) cancelAnimationFrame(state.tickHandle);
+  }
+  function resetTimer(){
+    if(state.tickHandle) cancelAnimationFrame(state.tickHandle);
+    state.running = false; state.remainMs = state.targetMs; state.endAt = null;
+    renderTime(state.remainMs);
+    el.start.disabled = false; el.pause.disabled = true;
+    speakTip("已重置，準備好就開始。");
+  }
+  function tick(){
+    const remain = state.endAt - Date.now();
+    state.remainMs = Math.max(0, remain);
+    renderTime(state.remainMs);
+    if(remain<=0){
+      state.running=false; el.start.disabled=false; el.pause.disabled=true;
+      speakTip("時間到！抽一句台詞犒賞自己～");
+      try{
+        const ctx = new (window.AudioContext||window.webkitAudioContext)();
+        const o = ctx.createOscillator(); const g = ctx.createGain();
+        o.type="sine"; o.frequency.value=880; o.connect(g); g.connect(ctx.destination);
+        g.gain.setValueAtTime(0.0001, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime+0.01);
+        o.start(); o.stop(ctx.currentTime+0.18);
+      }catch{}
+      pickAndShowLine();
+      return;
+    }
+    state.tickHandle = requestAnimationFrame(tick);
+  }
+
+  // Presets
+  $$(".chip").forEach(ch=>{
+    ch.addEventListener("click", ()=>{
+      $$(".chip").forEach(c=>c.classList.remove("active"));
+      ch.classList.add("active");
+      const min = parseInt(ch.dataset.min||el.customMin.value||25,10);
+      state.targetMs = min*60*1000; state.remainMs = state.targetMs; renderTime(state.remainMs);
+      speakTip(`已設定為 ${min} 分鐘`);
+    });
+  });
+  el.applyCustom.addEventListener("click", ()=>{
+    $$(".chip").forEach(c=>c.classList.remove("active"));
+    el.applyCustom.classList.add("active");
+    const min = Math.max(1, parseInt(el.customMin.value||"30",10));
+    state.targetMs = min*60*1000; state.remainMs = state.targetMs; renderTime(state.remainMs);
+    speakTip(`已套用自訂 ${min} 分鐘`);
+  });
+
+  // Events
+  el.start.addEventListener("click", startTimer);
+  el.pause.addEventListener("click", pauseTimer);
+  el.reset.addEventListener("click", resetTimer);
+
+  // ===== Phrase library =====
+  function loadPhrases(){
+    const raw = localStorage.getItem("oc_phrases") || "";
+    el.phrasePool.value = raw;
+  }
+  function savePhrases(){
+    localStorage.setItem("oc_phrases", el.phrasePool.value||"");
+  }
+  function pickAndShowLine(){
+    const arr = (el.phrasePool.value||"").split("\n").map(s=>s.trim()).filter(Boolean);
+    el.linePreview.textContent = arr.length? arr[Math.floor(Math.random()*arr.length)] : "（台詞庫是空的，先寫幾句吧）";
+  }
+  el.savePhrases.addEventListener("click", ()=>{ savePhrases(); speakTip("台詞庫已保存"); });
+  el.nextLine.addEventListener("click", pickAndShowLine);
+
+  // Init
+  renderTime(state.remainMs);
+  loadPhrases();
+  pickAndShowLine();
+})();
+</script>
+</body>
+</html>
