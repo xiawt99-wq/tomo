@@ -259,7 +259,7 @@
     }
     
     .status-gift-preview {
-        font-size: 10px; /* 减小预覽文字 */
+        font-size: 10px; /* 减小預覽文字 */
     }
 }
 
@@ -345,14 +345,14 @@
             50% { transform: translateY(-3px) scale(1.02); }
         }
         
-        /* 肉垫特效 */
+        /* 肉墊特效 */
         .paw-button {
             position: relative;
             overflow: hidden;
         }
         
         .paw-button::before {
-            content: '🐾';
+            content: '👑';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -492,7 +492,7 @@
             transform: translateY(0);
         }
         
-        /* 優化：只让纯文字部分居中 */
+        /* 優化：只讓純文字部分居中 */
         .oc-message-text-wrapper {
             display: inline-block;
             position: relative;
@@ -677,7 +677,7 @@
             font-weight: 500;
         }
         
-        /* 自定义狀態输入框樣式 */
+        /* 自定義狀態输入框樣式 */
         #customStatusInput {
             border-top: 1px solid rgba(139, 92, 246, 0.2);
             padding-top: 12px;
@@ -916,7 +916,7 @@
             }
         }
         
-        /* 開始按钮提示文字樣式 */
+        /* 開始按鈕提示文字樣式 */
         #startBtnHint {
             animation: pulse-hint 2s ease-in-out infinite;
         }
@@ -926,7 +926,7 @@
             50% { opacity: 1; }
         }
         
-        /* 三按钮布局 */
+        /* 三按鈕布局 */
         .three-button-layout {
             display: flex;
             align-items: center;
@@ -982,7 +982,7 @@
             90% { transform: translateX(-3px); }
         }
         
-        /* 愤怒震動效果 */
+        /* 憤怒震動效果 */
         .angry-shake {
             animation: angry-shake 0.6s ease-in-out;
         }
@@ -1000,7 +1000,7 @@
             90% { transform: translateX(-6px) rotate(-2deg); }
         }
         
-        /* 完成庆祝動畫 */
+        /* 完成慶祝動畫 */
         .celebration {
             animation: celebration 1s ease-in-out;
         }
@@ -1012,7 +1012,7 @@
             75% { transform: scale(1.1) rotate(5deg); }
         }
         
-        /* 完成弹窗樣式 */
+        /* 完成彈窗樣式 */
         .completion-modal {
             position: fixed;
             top: 0;
@@ -1080,7 +1080,7 @@
             box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
         
-        /* 完成特效 - 星星钻石飘落 */
+        /* 完成特效 - 星星鑽石飄落 */
         .celebration-particle {
             position: fixed;
             font-size: 24px;
@@ -1104,7 +1104,7 @@
             }
         }
         
-        /* 禮物弹窗樣式 */
+        /* 禮物彈窗樣式 */
         .gift-modal {
             position: fixed;
             top: 0;
@@ -1320,7 +1320,7 @@
             transform: translateX(-50%) scale(1.1);
         }
         
-        /* 語句编辑弹窗 */
+        /* 語句編輯彈窗 */
         .style-editor-modal {
             position: fixed;
             top: 0;
@@ -1454,7 +1454,7 @@
             border-color: rgba(139, 92, 246, 0.6);
         }
         
-        /* 已完成任務弹窗樣式 */
+        /* 已完成任務彈窗樣式 */
         .completed-tasks-modal {
             position: fixed;
             top: 0;
@@ -1530,7 +1530,7 @@
             background: rgba(59, 130, 246, 0.2);
         }
         
-        /* 統計數据點击效果 */
+        /* 統計數據點擊效果 */
         .stat-clickable {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1625,7 +1625,7 @@
             }
         }
         
-        /* 新增：自定义風格刪除按钮 */
+        /* 新增：自定义風格刪除按鈕 */
         .custom-style-delete {
             position: absolute;
             top: 8px;
@@ -1703,25 +1703,10 @@ body {
 
 </style>
 </head>
-<body class="min-h-screen">
-    <!-- 背景装飾動畫 -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <!-- 飘落樱花 -->
-        <div class="absolute top-16 left-12 text-pink-300/60 text-2xl floating">🌸</div>
-        <div class="absolute top-24 right-20 text-pink-200/50 text-xl floating" style="animation-delay: 1s;">🌸</div>
-        <div class="absolute top-40 left-1/3 text-pink-300/40 text-lg floating" style="animation-delay: 2s;">🌸</div>
-        <div class="absolute bottom-40 right-16 text-pink-200/60 text-xl floating" style="animation-delay: 0.5s;">🌸</div>
-        
-        <!-- 簡單愛心改為樱花 -->
-        <div class="absolute top-32 right-12 text-pink-400/70 text-lg sparkle">🌸</div>
-        <div class="absolute bottom-32 left-16 text-pink-300/60 text-sm sparkle" style="animation-delay: 1s;">🌸</div>
-        <div class="absolute top-60 left-8 text-pink-400/50 text-lg sparkle" style="animation-delay: 1.5s;">🌸</div>
-    </div>
-
     <!-- 首頁 -->
     <div id="homePage" class="page show">
         <div class="flex flex-col min-h-screen p-4 relative z-10">
-            <!-- 頂部狀態栏 -->
+            <!-- 頂部狀態欄 -->
             <div class="flex justify-between items-center pt-4 pb-2 px-2">
                 <div class="flex items-center space-x-2">
                     <div class="w-2 h-2 bg-green-400 rounded-full breathe"></div>
@@ -1747,7 +1732,7 @@ body {
                         <div class="flex-1">
                             <h2 id="currentOCGreeting" class="text-lg font-semibold text-slate-800 mb-1">早安，大小姐！</h2>
                             <p class="text-sm text-purple-600/70">
-                                <span id="currentOCName">小艾</span>陪你度过專注的一天～ ✨
+                                <span id="currentOCName">尉霆</span>陪你度過這一天～ ✨
                             </p>
                         </div>
                         <button class="glass-card rounded-xl p-2 button-hover">
@@ -1853,14 +1838,14 @@ body {
             <div id="giftList" class="max-h-96 overflow-y-auto">
                 <div class="text-center text-slate-500 py-8">
                     <div class="text-4xl mb-2">🎁</div>
-                    <p>今天還没有收到禮物呢～<br>完成番茄鐘就能获得OC的禮物奖励！</p>
+                    <p>今天還沒有收到禮物呢～<br>完成番茄鐘就能獲得OC的禮物獎勵！</p>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <!-- 狀態禮物编辑弹窗 -->
+    <!-- 狀態禮物編輯彈窗 -->
 <div id="statusGiftEditorModal" class="status-gift-editor-modal">
     <div class="status-gift-editor-content">
         <div class="status-gift-editor-header">
@@ -1875,8 +1860,8 @@ body {
             </button>
         </div>
         <div class="mb-4">
-            <p class="text-sm text-slate-600 mb-2">每行一個禮物，建议格式：表情符号 + 禮物名称 + 鼓励語</p>
-            <p class="text-xs text-slate-500">例如：🏆 學習冠军奖杯！你的努力值得最好的奖励！</p>
+            <p class="text-sm text-slate-600 mb-2">每行一個禮物，建議格式：表情符号 + 禮物名稱 + 鼓勵語</p>
+            <p class="text-xs text-slate-500">例如：🏆 學習冠軍獎杯！你的努力值得最好的獎勵！</p>
         </div>
         <textarea id="statusGiftEditorTextarea" class="status-gift-editor-textarea" placeholder="输入禮物內容，每行一個..."></textarea>
         <div class="status-gift-editor-actions">
@@ -1889,7 +1874,7 @@ body {
     <!-- OC卡片頁面 -->
     <div id="ocCardsPage" class="page hidden">
         <div class="flex flex-col min-h-screen p-4 relative z-10">
-            <!-- 頂部導航栏 -->
+            <!-- 頂部導航欄 -->
             <div class="flex items-center justify-between pt-4 pb-6 px-2">
                 <button onclick="goBackToHome()" class="glass-card rounded-full p-3 button-hover">
                     <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1926,7 +1911,7 @@ body {
     <!-- OC設置頁面 -->
     <div id="ocSettingPage" class="page hidden">
         <div class="flex flex-col min-h-screen p-4 relative z-10">
-            <!-- 頂部導航栏 -->
+            <!-- 頂部導航欄 -->
             <div class="flex items-center justify-between pt-4 pb-6 px-2">
                 <button onclick="goBackToOCCards()" class="glass-card rounded-full p-3 button-hover">
                     <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1962,16 +1947,16 @@ body {
                         <label class="block text-sm font-medium text-slate-700 mb-2">夢角名字</label>
                         <input type="text" id="ocNameInput" 
                                class="w-full px-4 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/80" 
-                               placeholder="给你的夢角起個名字" 
-                               value="小艾">
+                               placeholder="你的夢角名字" 
+                               value="尉霆">
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">对你的称呼</label>
                         <input type="text" id="userTitleInput" 
                                class="w-full px-4 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/80" 
-                               placeholder="夢角怎樣称呼你" 
-                               value="大小姐">
+                               placeholder="夢角如何稱呼你" 
+                               value="女王">
                     </div>
                 </div>
             </div>
@@ -1980,11 +1965,11 @@ body {
             <div class="setting-section">
                 <h3 class="text-lg font-semibold text-slate-800 mb-4">問候語設置</h3>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-2">自定义問候語</label>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">自定義問候語</label>
                     <textarea id="customGreeting" 
                               class="w-full px-4 py-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/80 h-20 resize-none" 
-                              placeholder="設置自定义問候語（留空則根据時間自動問好）"></textarea>
-                    <p class="text-xs text-slate-500 mt-1">留空時會根据時間自動顯示：早上好/下午好/晚上好</p>
+                              placeholder="設置自定義問候語（留空則根据時間自動問好）"></textarea>
+                    <p class="text-xs text-slate-500 mt-1">留空時會根据時間自動顯示：早安/午安/晚安</p>
                 </div>
             </div>
 
@@ -1992,7 +1977,7 @@ body {
             <div class="setting-section">
                 <h3 class="text-lg font-semibold text-slate-800 mb-4">個性化設置</h3>
                 
-                <!-- 鼓励風格 -->
+                <!-- 鼓勵風格 -->
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-slate-700 mb-3">鼓励風格（可多選）</label>
                     <div class="style-grid" id="encourageStyleGrid">
